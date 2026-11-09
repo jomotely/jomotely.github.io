@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Calm, light, spacious. Pale page, white surfaces, hairline borders,
+ * one accent (deep teal), desaturated status colors, almost no shadows.
+ * Dark mode is a pure variable swap on the .dark class.
+ */
+@layer base {
+  :root {
+    --bg: 244 245 249;          /* #F4F5F9 page */
+    --surface: 255 255 255;     /* #FFFFFF cards, popovers, sidebar tint base */
+    --line: 227 230 238;        /* #E3E6EE 1px borders */
+    --text: 20 23 31;           /* #14171F */
+    --text-2: 91 98 114;        /* #5B6272 */
+    --text-3: 154 161 176;      /* #9AA1B0 */
+    --accent: 13 107 98;        /* #0D6B62 — original accent, not a stock blue */
+    --accent-strong: 10 86 79;  /* hover / pressed */
+    --accent-tint: 228 241 238; /* pale active fill */
+    --accent-tint-2: 211 233 229; /* pale hover fill */
+    --on-accent: 255 255 255;
+    --ok: 47 125 91;            /* desaturated green */
+    --warn: 154 107 21;         /* desaturated amber */
+    --danger: 180 66 58;        /* desaturated red */
+    --popover-shadow: 0 12px 32px -12px rgb(20 23 31 / 0.16), 0 2px 8px -2px rgb(20 23 31 / 0.08);
+  }
+
+  .dark {
+    --bg: 16 19 25;             /* #101319 */
+    --surface: 24 28 36;        /* #181C24 */
+    --line: 40 45 57;           /* #282D39 */
+    --text: 235 237 241;
+    --text-2: 167 174 189;
+    --text-3: 112 120 136;
+    --accent: 92 200 184;       /* #5CC8B8 */
+    --accent-strong: 126 216 202;
+    --accent-tint: 32 61 57;
+    --accent-tint-2: 39 72 67;
+    --on-accent: 7 26 23;
+    --ok: 116 199 158;
+    --warn: 219 181 108;
+    --danger: 226 141 134;
+    --popover-shadow: 0 12px 32px -12px rgb(0 0 0 / 0.55), 0 2px 8px -2px rgb(0 0 0 / 0.4);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-page font-sans text-ink antialiased;
+    font-size: 15px;
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    @apply bg-accent/25;
+  }
+
+  /* Visible focus rings in both themes. */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    @apply outline-none ring-2 ring-accent/70 ring-offset-2 ring-offset-page;
+  }
+}
+
+@layer components {
+  /* White card: 12px radius, 1px border, no shadow. */
+  .surface {
+    @apply rounded-card border border-line bg-surface;
+  }
+
+  .input {
+    @apply w-full rounded-field border border-line bg-surface px-3.5 py-2 text-sm text-ink placeholder:text-ink3 transition-colors duration-150 focus:border-accent;
+  }
+
+  .label {
+    @apply mb-1.5 block text-[13px] font-medium text-ink2;
+  }
+
+  .hint {
+    @apply mt-1.5 text-[13px] text-ink3;
+  }
+
+  .kbd {
+    @apply inline-flex h-5 min-w-5 items-center justify-center rounded-md border border-line bg-page px-1.5 font-mono text-[10px] font-medium text-ink2;
+  }
+
+  /*
+   * Pill search bars (home hero + results bar). The container draws the
+   * focus ring; the borderless input inside suppresses its own.
+   */
+  .pill-bar:focus-within {
+    @apply ring-2 ring-accent/70 ring-offset-2 ring-offset-page;
+  }
+
+  .pill-bar input:focus-visible {
+    @apply outline-none ring-0 ring-offset-0;
+  }
+
+  .scroll-slim {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--text-3) / 0.4) transparent;
+  }
+  .scroll-slim::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  .scroll-slim::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-ink3/40;
+  }
+  .scroll-slim::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

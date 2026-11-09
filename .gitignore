@@ -1,0 +1,11 @@
+node_modules
+dist
+.DS_Store
+.env
+.env.*
+skills
+download
+.zscripts
+Caddyfile
+bun.lock
+dev.log
